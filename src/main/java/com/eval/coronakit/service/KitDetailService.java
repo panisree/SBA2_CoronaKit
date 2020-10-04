@@ -8,4 +8,5 @@ public interface KitDetailService {
 	public KitDetail addKitItem(KitDetail kitItem);
 	public KitDetail getKitItemById(int itemId);
 	public List<KitDetail> getAllKitItemsOfAKit(int kitId);
+	public List<KitDetail> getAllKitItemsOfAKit();
 }

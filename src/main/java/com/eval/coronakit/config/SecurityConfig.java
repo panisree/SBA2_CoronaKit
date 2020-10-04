@@ -3,6 +3,7 @@ package com.eval.coronakit.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
@@ -34,7 +35,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 		http.headers().frameOptions().disable();
 		
+		
+		
 		// Add Your Application Based Security config here
+		http.authorizeRequests() // start defining the rule
+		.antMatchers("/home").authenticated()
+		.antMatchers("/admin/**").hasRole("ADMIN")
+		.antMatchers("/user/**").hasRole("USER")
+		.and() 
+		.formLogin().defaultSuccessUrl("/home")
+		.loginPage("/custom-login")
+		.loginProcessingUrl("/validate")
+		.permitAll()
+		.and()
+		.logout().permitAll() //  have a provision for logout (free implementation of /logout url)
+		.and()
+		.exceptionHandling()
+			.accessDeniedPage("/custom-error");
 		
 	}
 }

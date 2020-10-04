@@ -4,6 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 
 @Entity
 public class ProductMaster {
@@ -13,10 +17,15 @@ public class ProductMaster {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	@Size(min=2, message="At least 2 characters are required!")
+	@NotEmpty(message="Product Name should not be empty")
 	private String productName;
 	
+	@Min(value = 10, message = "Value should be at least 10 or above!")
 	private Integer cost;
 	
+	@Size(min=5, message="At least 5 characters are required!") 
+	@NotEmpty(message="Product Description should not be empty")
 	private String productDescription;
 	
 	public ProductMaster() {
